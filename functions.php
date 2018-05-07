@@ -74,14 +74,36 @@ if ( ! function_exists( 'phantom_setup' ) ) :
 		 * @link https://codex.wordpress.org/Theme_Logo
 		 */
 		add_theme_support( 'custom-logo', array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
+			'height'      => 100,
+			'width'       => 400,
 			'flex-height' => true,
+			'flex-width'  => true,
+			'header-text' => array( 'site-title', 'site-description' ),
 		) );
 	}
+
+
 endif;
 add_action( 'after_setup_theme', 'phantom_setup' );
+
+
+function theme_prefix_the_custom_logo() {
+	
+	if ( function_exists( 'the_custom_logo' ) ) {
+		the_custom_logo();
+	}
+
+}
+
+add_filter('get_custom_logo','change_logo_class');
+
+function change_logo_class($html)
+{
+	$html = str_replace('class="custom-logo"', 'class="phantom-custom-logo"', $html);
+	$html = str_replace('class="custom-logo-link"', 'class="logo"', $html);
+	return $html;
+}
+
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
